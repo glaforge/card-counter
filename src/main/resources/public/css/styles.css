@@ -1,0 +1,58 @@
+body {
+    background-color: var(--sl-color-primary-100);
+    padding: 0.5rem;
+}
+
+h1,
+h2,
+h3,
+p,
+div,
+span {
+    font-family: var(--sl-font-sans);
+}
+
+h1 {
+    color: var(--sl-color-primary-600);
+}
+
+div.grid {
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+    max-width: 600px;
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: white;
+    box-shadow: #CCCCCCCC 0.5rem 0.5rem 1rem;
+}
+
+div.grid>div {
+    padding-bottom: 1em;
+}
+
+sl-select,
+sl-textarea,
+sl-button {
+    padding-bottom: 1rem;
+}
+
+input[type="file"] {
+    background-color: var(--sl-color-primary-100);
+    padding: 1rem;
+}
+
+#image-picker {
+    display: none;
+}
+
+#image-preview {
+    display: none;
+    margin-bottom: 1rem;
+    width: 600px;
+    object-fit: "contain";
+}
+
+#cards sl-tag {
+    margin: 0.5rem;
+}

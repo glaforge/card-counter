@@ -1,0 +1,4 @@
+Which numbers (between -2 and 12) do you see on the center of the uncovered playing cards?
+Reply with a JSON array.
+
+JSON:

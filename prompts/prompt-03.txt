@@ -1,0 +1,8 @@
+Take a deep breath and focus on each playing card in this image.
+The picture contains playing cards with numbers on their center whose values range between -2 up to 12.
+Some cards may be upside down.
+Ignore the small numbers in the corners of the cards. Ignore the uncovered colorful cards with the "Skyjo" label.
+Focus on the central number of the uncovered playing cards.
+Return the list of the center numbers of the uncovered cards, in the form of a JSON array.
+
+JSON:
