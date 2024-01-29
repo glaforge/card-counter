@@ -3,3 +3,13 @@
 
 # Ignore Gradle build output directory
 build
+
+
+# Java, logs, macOS...
+*.class
+*.log
+*.jar
+*.tar.gz
+hs_err_pid*
+replay_pid*
+.DS_Store
