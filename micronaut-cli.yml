@@ -1,5 +1,5 @@
 applicationType: default
-defaultPackage: com.google.cloud.devrel.skyjocounter
+defaultPackage: com.google.cloud.devrel.cardcounter
 testFramework: junit
 sourceLanguage: java
 buildTool: gradle

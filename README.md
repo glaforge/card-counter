@@ -1,21 +1,19 @@
-## Micronaut 4.2.3 Documentation
+# Counting playing card with Gemini Pro Vision
 
-- [User Guide](https://docs.micronaut.io/4.2.3/guide/index.html)
-- [API Reference](https://docs.micronaut.io/4.2.3/api/index.html)
-- [Configuration Reference](https://docs.micronaut.io/4.2.3/guide/configurationreference.html)
-- [Micronaut Guides](https://guides.micronaut.io/index.html)
----
+As I've been playing to the [Skyjo](https://www.philibertnet.com/fr/magilano/80922-skyjo-4260470080018.html)
+playing card game with my daughter, I thought it would be fun to see if
+[Gemini Pro Vision](https://blog.google/technology/ai/gemini-api-developers-cloud/)
+multimodal large language model would be able to count the points on the cards.
 
-- [Micronaut Gradle Plugin documentation](https://micronaut-projects.github.io/micronaut-gradle-plugin/latest/)
-- [GraalVM Gradle Plugin documentation](https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html)
-- [Shadow Gradle Plugin](https://plugins.gradle.org/plugin/com.github.johnrengelman.shadow)
-## Feature serialization-jackson documentation
+The game consists of cards with numbers ranging from -2 up to 12.
+The winner is the person with the lowest number of points (ie. the total of all the numbers on the cards).
 
-- [Micronaut Serialization Jackson Core documentation](https://micronaut-projects.github.io/micronaut-serialization/latest/guide/)
+## Trying it!
 
 
-## Feature micronaut-aot documentation
 
-- [Micronaut AOT documentation](https://micronaut-projects.github.io/micronaut-aot/latest/guide/)
+## Code
 
-
+This repository contains the code of the demo application.
+It's a [Micronaut](https://micronaut.io) application developed in Java.
+Interactions with the Gemini model are handled with the [LangChain4j](https://github.com/langchain4j/) library.

@@ -1,4 +1,4 @@
-package com.google.cloud.devrel.skyjocounter;
+package com.google.cloud.devrel.cardcounter;
 
 import java.io.File;
 import java.io.IOException;

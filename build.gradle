@@ -5,11 +5,14 @@ plugins {
 }
 
 version = "0.1"
-group = "com.google.cloud.devrel.skyjocounter"
+group = "com.google.cloud.devrel.cardcounter"
 
 repositories {
     mavenCentral()
-    mavenLocal()
+    //    mavenLocal()
+    maven {
+        url "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+    }
 }
 
 dependencies {
@@ -24,11 +27,11 @@ dependencies {
 
 
 application {
-    mainClass.set("com.google.cloud.devrel.skyjocounter.Application")
+    mainClass.set("com.google.cloud.devrel.cardcounter.Application")
 }
 java {
-    sourceCompatibility = JavaVersion.toVersion("21")
-    targetCompatibility = JavaVersion.toVersion("21")
+    sourceCompatibility = JavaVersion.toVersion("17")
+    targetCompatibility = JavaVersion.toVersion("17")
 }
 
 
@@ -38,7 +41,7 @@ micronaut {
     testRuntime("junit5")
     processing {
         incremental(true)
-        annotations("com.google.cloud.devrel.skyjocounter.*")
+        annotations("com.google.cloud.devrel.cardcounter.*")
     }
     aot {
         // Please review carefully the optimizations enabled below
