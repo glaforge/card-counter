@@ -1,0 +1,18 @@
+# cloudbuild.yaml
+steps:
+  - name: 'gcr.io/cloud-builders/gradle'
+    args: ['build', '-x', 'test']
+    entrypoint: 'bash'  # To execute the custom script
+    script: |
+      chmod +x ./gradlew
+      ./gradlew shadowjar --no-daemon
+    volumes:
+      - name: 'jar_volume'  # Shared volume
+        path: /app # Location of files
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', '$CLOUD_REGION-docker.pkg.dev/$PROJECT_ID/containers/$CONTAINER_NAME:v1', '.']
+    volumes:
+      - name: 'jar_volume'
+        path: /app    # SAME path as cloud build
+images:
+  - '$CLOUD_REGION-docker.pkg.dev/$PROJECT_ID/containers/$CONTAINER_NAME:v1'

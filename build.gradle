@@ -1,7 +1,7 @@
 plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("io.micronaut.application") version "4.2.1"
-    id("io.micronaut.aot") version "4.2.1"
+    id("io.micronaut.application") version "4.4.4"
+    id("io.micronaut.aot") version "4.4.4"
 }
 
 version = "0.1"
@@ -9,34 +9,30 @@ group = "com.google.cloud.devrel.cardcounter"
 
 repositories {
     mavenCentral()
-    //    mavenLocal()
-    maven {
-        url "https://s01.oss.sonatype.org/content/repositories/snapshots/"
-    }
 }
 
 dependencies {
     annotationProcessor("io.micronaut:micronaut-http-validation")
     annotationProcessor("io.micronaut.serde:micronaut-serde-processor")
     implementation("io.micronaut.serde:micronaut-serde-jackson")
-    implementation("dev.langchain4j:langchain4j-vertex-ai-gemini:0.26.0-SNAPSHOT")
+    implementation("com.google.auth:google-auth-library-oauth2-http:1.30.1")
+    implementation("dev.langchain4j:langchain4j-vertex-ai-gemini:0.36.2")
     compileOnly("io.micronaut:micronaut-http-client")
     runtimeOnly("ch.qos.logback:logback-classic")
     testImplementation("io.micronaut:micronaut-http-client")
 }
 
-
 application {
     mainClass.set("com.google.cloud.devrel.cardcounter.Application")
 }
 java {
-    sourceCompatibility = JavaVersion.toVersion("17")
-    targetCompatibility = JavaVersion.toVersion("17")
+    sourceCompatibility = JavaVersion.toVersion("21")
+    targetCompatibility = JavaVersion.toVersion("21")
 }
-
 
 graalvmNative.toolchainDetection = false
 micronaut {
+    version("4.7.2")
     runtime("netty")
     testRuntime("junit5")
     processing {
@@ -53,8 +49,10 @@ micronaut {
         optimizeClassLoading = true
         deduceEnvironment = true
         optimizeNetty = true
+        replaceLogbackXml = true
     }
 }
 
-
-
+tasks.named("dockerfileNative") {
+    jdkVersion = "21"
+}

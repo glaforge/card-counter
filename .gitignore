@@ -4,11 +4,13 @@
 # Ignore Gradle build output directory
 build
 
+# Ignore JARs but don't ignore the Gradle wrapper
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
 
 # Java, logs, macOS...
 *.class
 *.log
-*.jar
 *.tar.gz
 hs_err_pid*
 replay_pid*
