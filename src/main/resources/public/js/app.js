@@ -111,7 +111,7 @@ async function clickSubmit(e) {
                 card.textContent = cardNumber;
                 card.style.animationDelay = `${index * 0.05}s`;
 
-                if (cardNumber === -1) {
+                if (cardNumber < 0) {
                     card.classList.add("point-blue");
                 } else if (cardNumber === 0) {
                     card.classList.add("point-cyan");

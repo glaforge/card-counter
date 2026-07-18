@@ -63,7 +63,7 @@ public class UploadController {
             Output a JSON list of integers, where each value is the big number displayed in the center of each face-up card.
             Ignore the small numbers in the corners of the cards.
             CRITICAL: Ignore face-down cards completely. Face-down cards have the colorful word "SKYJO" or "SKYJO ACTION" written on them. Do NOT mistake the letter "O" in the word "SKYJO" for the number 0. If a card has the word "SKYJO" printed across the back, skip it and do not output any number for it.
-            Only count cards that clearly show a valid Skyjo number (-1 to 12).
+            Only count cards that clearly show a valid Skyjo number (-2 to 12).
             Be careful when reading the numbers, as sometimes some cards are tilted, cut, or upside down.
             """);
 
