@@ -1,3 +1,18 @@
+/*
+ * Copyright 2026 Google LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 function clearCards() {
     const cardsHolder = document.querySelector("#cards");
     cardsHolder.replaceChildren();
@@ -16,18 +31,19 @@ function clearCardsAndPic() {
 
 function clearTotal() {
     const total = document.querySelector("#total");
-    total.textContent = "";
+    total.textContent = "0";
+    document.querySelector("#total-container").style.display = "none";
 }
 
 function clickPicker(e) {
-    clearCardsAndPic();
-
+    if (e) e.preventDefault();
     const picker = document.querySelector("#image-picker")
-    picker.click(e);
+    picker.click();
 }
 
 function newFileSelection(e) {
     clearCardsAndPic();
+    clearTotal();
 
     const picker = document.querySelector("#image-picker");
     var files = picker.files;
@@ -42,6 +58,8 @@ function newFileSelection(e) {
         () => {
             preview.src = reader.result;
             preview.style.display = "block";
+            // Auto submit!
+            clickSubmit(null);
         },
         false,
     );
@@ -52,59 +70,80 @@ function newFileSelection(e) {
 }
 
 async function clickSubmit(e) {
-    console.log("Submit clicked");
+    if (e) e.preventDefault();
+    console.log("Auto-submit triggered");
     clearCards();
     clearTotal();
 
-    const submitButton = document.querySelector("#submit-button");
-    submitButton.loading = true;
-    submitButton.disabled = true;
+    const pickerButton = document.querySelector("#picker-button");
+    pickerButton.loading = true;
+    pickerButton.disabled = true;
 
     const picker = document.querySelector("#image-picker")
     var files = picker.files;
-    if (!files.length && files.length != 1) return;
+    if (!files.length && files.length != 1) {
+        pickerButton.loading = false;
+        pickerButton.disabled = false;
+        return;
+    }
 
     const file = picker.files[0];
-
     const formData = new FormData();
     formData.append('picture', file);
 
     console.log("Sending request");
-    var response = await fetch("/upload", {
-        method: "POST",
-        body: formData
-    });
-
-    submitButton.loading = false;
-    submitButton.disabled = false;
-
-    console.log("Received response");
-    if (response.ok) {
-        const cardNumbers = await response.json();
-        console.log(cardNumbers);
-
-        cardNumbers.forEach(cardNumber => {
-            const cardsHolder = document.querySelector("#cards");
-            const card = document.createElement("sl-tag");
-            card.textContent = cardNumber;
-            card.setAttribute("size", "large");
-            if (cardNumber <= 0) {
-                card.setAttribute("variant", "primary");
-            } else if (cardNumber <= 4) {
-                card.setAttribute("variant", "success");
-            } else if (cardNumber <= 8) {
-                card.setAttribute("variant", "warning");
-            } else {
-                card.setAttribute("variant", "danger");
-            }
-            cardsHolder.appendChild(card);
+    try {
+        var response = await fetch("/upload", {
+            method: "POST",
+            body: formData
         });
 
-        const total = cardNumbers.reduce((a, b) => a + b, 0);
-        console.log("Total", total);
-        const totalCard = document.querySelector("#total");
-        totalCard.textContent = total;
-    } else {
-        console.log("Error fetching server response");
+        console.log("Received response");
+        if (response.ok) {
+            const cardNumbers = await response.json();
+            console.log(cardNumbers);
+
+            const cardsHolder = document.querySelector("#cards");
+            
+            cardNumbers.forEach((cardNumber, index) => {
+                const card = document.createElement("div");
+                card.classList.add("card-point");
+                card.textContent = cardNumber;
+                card.style.animationDelay = `${index * 0.05}s`;
+
+                if (cardNumber === -1) {
+                    card.classList.add("point-blue");
+                } else if (cardNumber === 0) {
+                    card.classList.add("point-cyan");
+                } else if (cardNumber <= 4) {
+                    card.classList.add("point-green");
+                } else if (cardNumber <= 8) {
+                    card.classList.add("point-yellow");
+                } else {
+                    card.classList.add("point-red");
+                }
+                cardsHolder.appendChild(card);
+            });
+
+            const total = cardNumbers.reduce((a, b) => a + b, 0);
+            console.log("Total", total);
+            const totalCard = document.querySelector("#total");
+            totalCard.textContent = total;
+            document.querySelector("#total-container").style.display = "inline-block";
+            
+            // Scroll to the bottom to see results
+            setTimeout(() => {
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }, 100);
+
+        } else {
+            console.log("Error fetching server response");
+        }
+    } catch (err) {
+        console.error("Failed to upload:", err);
+    } finally {
+        pickerButton.loading = false;
+        pickerButton.disabled = false;
+        pickerButton.innerHTML = `<sl-icon slot="prefix" name="camera"></sl-icon> Take Another Picture`;
     }
 }

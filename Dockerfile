@@ -1,5 +1,5 @@
 # Dockerfile
-FROM openjdk:21-slim AS gradle-builder
+FROM eclipse-temurin:25-jdk AS gradle-builder
 WORKDIR /app
 
 # Copy ONLY what is needed for the gradle build.
@@ -12,7 +12,7 @@ COPY src src
 RUN chmod +x ./gradlew
 RUN ./gradlew shadowJar --no-daemon
 
-FROM openjdk:21-slim
+FROM eclipse-temurin:25-jdk
 WORKDIR /app
 COPY --from=gradle-builder /app/build/libs/*.jar app.jar
 EXPOSE 8080

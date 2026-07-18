@@ -1,7 +1,23 @@
+<!--
+  ~ Copyright 2026 Google LLC
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Card Point Counter</title>
+    <meta charset="UTF-8">
+    <title>Skyjo Card Counter</title>
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.12.0/cdn/themes/light.css"
@@ -18,44 +34,41 @@
     />
   </head>
   <body>
-    <div class="grid">
-      <div>
-        <h1>Count your points</h1>
-      </div>
-      <form action="/upload" method="post" enctype="multipart/form-data">
+    <div class="app-container">
+      <header>
+        <h1>Skyjo Counter</h1>
+        <p>Instantly calculate your Skyjo points from a photo!</p>
+      </header>
+      
+      <form action="/upload" method="post" enctype="multipart/form-data" id="upload-form">
         <input
           id="image-picker"
           type="file"
           name="picture"
           accept="image/*"
           capture="environment"
-          onchange="newFileSelection()"
+          onchange="newFileSelection(event)"
         />
-        <div>
+        
+        <div class="preview-container">
           <img id="image-preview" />
         </div>
-        <div>
-          <sl-button
-            id="picker-button"
-            variant="default"
-            onclick="clickPicker()"
-          >
-            <sl-icon slot="prefix" name="camera"></sl-icon>
-            Take a picture</sl-button
-          >
-        </div>
-        <div>
-          <sl-button
-            id="submit-button"
-            variant="primary"
-            onclick="clickSubmit()"
-            >Submit</sl-button
-          >
-        </div>
+
+        <sl-button
+          id="picker-button"
+          variant="primary"
+          size="large"
+          onclick="clickPicker(event)"
+        >
+          <sl-icon slot="prefix" name="camera"></sl-icon>
+          Take a Picture
+        </sl-button>
       </form>
+
       <div id="cards"></div>
-      <div>
-        <h2>Total: <span id="total"></span></h2>
+      
+      <div class="total-container" id="total-container" style="display: none;">
+        <h2><span id="total">0</span> <span class="points-label">points</span></h2>
       </div>
     </div>
   </body>
